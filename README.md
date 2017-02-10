@@ -7,8 +7,10 @@ Shadowsocksr-libev for OpenWrt
 简介
 ---
 
- 本项目是 [shadowsocksr-libev][1] 在 OpenWrt 上的移植 ,写法参考https://github.com/shadowsocks/openwrt-shadowsocks/ 
-
+本项目是 [shadowsocksr-libev][1] 在 OpenWrt 上的移植 ,写法参考https://github.com/shadowsocks/openwrt-shadowsocks/ 
+ 
+可与[luci-app-shadowsocksR][P]搭配使用
+ 
 特性
 ---
 
@@ -26,7 +28,7 @@ Shadowsocksr-libev for OpenWrt
            └── ssr-tunnel      // 提供端口转发, 可用于 DNS 查询
    ```
 
- - shadowsocks-libev-server
+ - shadowsocksr-libev-server
 
    ```
    服务端/
@@ -96,3 +98,4 @@ Shadowsocksr-libev for OpenWrt
   [M]: https://www.multipath-tcp.org/
   [N]: https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md
   [O]: http://www.right.com.cn/forum/thread-198649-1-1.html
+  [P]: https://github.com/AlexZhuo/luci-app-shadowsocksR
