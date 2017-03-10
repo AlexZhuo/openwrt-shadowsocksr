@@ -1,8 +1,8 @@
-Shadowsocksr-libev for OpenWrt
+Shadowsocksr-libev for OpenWrt/LEDE
 ===
 版本 2.5.6
 
-为编译[此固件][O]所需依赖包而写的Makefile
+为编译[此固件][O]所需依赖包而写的Makefile,在CC 15.05,CC 15.05.1,LEDE 17.01.0编译成功
 
 简介
 ---
@@ -14,8 +14,8 @@ Shadowsocksr-libev for OpenWrt
 特性
 ---
 
-软件包只包含 [shadowsocksr-libev][1] 的可执行文件  
-可编译两种版本  
+软件包只包含 [shadowsocksr-libev][1] 的可执行文件
+可编译两种版本
 
  - shadowsocksr-libev
 
@@ -52,7 +52,7 @@ Shadowsocksr-libev for OpenWrt
    cd OpenWrt-SDK-ar71xx-*
    # 安装 feeds
    # 如果是 uClibc SDK (15.05.1 及以下)
-     git clone https://github.com/aa65535/openwrt-feeds.git package/feeds
+     git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
    # 如果是 musl SDK (trunk 或 LEDE)
      ./scripts/feeds update base packages
      ./scripts/feeds install zlib libopenssl libpolarssl libmbedtls libpcre
@@ -65,10 +65,72 @@ Shadowsocksr-libev for OpenWrt
    make package/shadowsocksr-libev/compile V=99
    ```
 
+编译错误汇总
+---
+1、报错`C compiler cannot create executables`
+
+错误原因：当前Linux系统没有完整的编译环境
+
+解决方法：sudo apt-get install ccache build-essential 
+
+
+2、报错`configure: error: PolarSSL libraries not found.`
+
+错误原因：SDK没有找到PolarSSl的feed
+
+解决方法：git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
+
+
+3、报错`configure: error: "zlib header files not found."`
+
+错误原因：SDK没有找到libopenssl和zlib的feed，该问题会出现在LEDE rc1的SDK中，使用17.01.0 SDK不会有这个问题
+
+解决方法：git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
+
+
+4、报错
+```
+checking for pcre-config... pcre-config
+checking for pcre headers in ... not found
+checking for library containing pcre_exec... no
+configure: error: Cannot find pcre library. Configure --with-pcre=DIR
+```
+报错原因：SDK没有找到pcre的feed
+
+解决方法：git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds或者
+
+./scripts/feeds update base packages
+
+./scripts/feeds install libpcre
+
+
+5、执行`./scripts/feeds install zlib libopenssl libpolarssl libmbedtls libpcre`时输出不为如下标准输出
+```
+Installing package 'zlib' from base
+Installing package 'openssl' from base
+Installing package 'libpolarssl' from base
+Installing package 'mbedtls' from base
+Installing package 'pcre' from packages
+```
+而是报找不到feed的错误，如下
+```
+WARNING: No feed for package 'zlib' found, maybe it's already part of the standard packages?
+WARNING: No feed for package 'libopenssl' found, maybe it's already part of the standard packages?
+WARNING: No feed for package 'libpolarssl' found, maybe it's already part of the standard packages?
+WARNING: No feed for package 'libmbedtls' found, maybe it's already part of the standard packages?
+Installing package 'pcre' from packages
+```
+
+报错原因：一般出现在LEDE rc1,rc2的SDK上，更换SDK可解决这个问题。
+
+解决方法：更换SDK，或者
+git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
+
+
 配置
 ---
 
-   软件包本身并不包含配置文件, 配置文件内容为 JSON 格式, 支持的键:  
+   软件包本身并不包含配置文件, 配置文件内容为 JSON 格式, 支持的键:
 
    键名           | 数据类型 | 说明
    ---------------|----------|-----------------------------------------------

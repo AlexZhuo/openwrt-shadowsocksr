@@ -41,12 +41,19 @@ define Package/shadowsocksr-libev-polarssl
   DEPENDS:=+libpolarssl +libpthread +libpcre
 endef
 
+define Package/shadowsocksr-libev-mbedtls
+  $(call Package/shadowsocksr-libev/Default)
+  TITLE+= (mbedTLS)
+  VARIANT:=mbedtls
+  DEPENDS:=+libpthread +libpcre +libmbedtls
+endef
+
 
 define Package/shadowsocksr-libev-server
   $(call Package/shadowsocksr-libev/Default)
   TITLE+= (OpenSSL)
   VARIANT:=openssl
-  DEPENDS:=+libopenssl +libpthread +libpcre
+  DEPENDS:=+libopenssl +libpthread +libpcre +zlib
 endef
 
 define Package/shadowsocksr-libev-server-polarssl
@@ -56,32 +63,48 @@ define Package/shadowsocksr-libev-server-polarssl
   DEPENDS:=+libpolarssl +libpthread +libpcre
 endef
 
+define Package/shadowsocksr-libev-server-mbedtls
+  $(call Package/shadowsocksr-libev/Default)
+  TITLE+= (mbedTLS)
+  VARIANT:=mbedtls
+  DEPENDS:=+libpthread +libpcre +libmbedtls
+endef
+
 define Package/shadowsocksr-libev/description
 ShadowsocksR-libev is a lightweight secured socks5 proxy for embedded devices and low end boxes.
 endef
 
 Package/shadowsocksr-libev-polarssl/description=$(Package/shadowsocksr-libev/description)
+Package/shadowsocksr-libev-mbedtls/description=$(Package/shadowsocksr-libev/description)
 Package/shadowsocksr-libev-server/description=$(Package/shadowsocksr-libev/description)
 Package/shadowsocksr-libev-server-polarssl/description=$(Package/shadowsocksr-libev/description)
+Package/shadowsocksr-libev-server-mbedtls/description=$(Package/shadowsocksr-libev/description)
 
 define Package/shadowsocksr-libev/conffiles
 /etc/shadowsocksr.json
 endef
 
 Package/shadowsocksr-libev-polarssl/conffiles = $(Package/shadowsocksr-libev/conffiles)
-
+Package/shadowsocksr-libev-mbedtls/conffiles = $(Package/shadowsocksr-libev/conffiles)
 
 define Package/shadowsocksr-libev-server/conffiles
 /etc/shadowsocksr-server.json
 endef
 
 Package/shadowsocksr-libev-server-polarssl/conffiles = $(Package/shadowsocksr-libev-server/conffiles)
+Package/shadowsocksr-libev-server-mbedtls/conffiles = $(Package/shadowsocksr-libev-server/conffiles)
 
 
-CONFIGURE_ARGS += --disable-ssp
+CONFIGURE_ARGS += --disable-ssp --disable-documentation --disable-assert 
 
+ifeq ($(BUILD_VARIANT),openssl)
+	CONFIGURE_ARGS += --with-crypto-library=openssl
+endif
 ifeq ($(BUILD_VARIANT),polarssl)
 	CONFIGURE_ARGS += --with-crypto-library=polarssl
+endif
+ifeq ($(BUILD_VARIANT),mbedtls)
+	CONFIGURE_ARGS += --with-crypto-library=mbedtls
 endif
 
 define Package/shadowsocksr-libev/install
@@ -95,6 +118,7 @@ define Package/shadowsocksr-libev/install
 endef
 
 Package/shadowsocksr-libev-polarssl/install=$(Package/shadowsocksr-libev/install)
+Package/shadowsocksr-libev-mbedtls/install=$(Package/shadowsocksr-libev/install)
 
 
 define Package/shadowsocksr-libev-server/install
@@ -106,8 +130,11 @@ define Package/shadowsocksr-libev-server/install
 endef
 
 Package/shadowsocksr-libev-server-polarssl/install=$(Package/shadowsocksr-libev-server/install)
+Package/shadowsocksr-libev-server-mbedtls/install=$(Package/shadowsocksr-libev-server/install)
 
 $(eval $(call BuildPackage,shadowsocksr-libev))
 $(eval $(call BuildPackage,shadowsocksr-libev-polarssl))
+$(eval $(call BuildPackage,shadowsocksr-libev-mbedtls))
 $(eval $(call BuildPackage,shadowsocksr-libev-server))
 $(eval $(call BuildPackage,shadowsocksr-libev-server-polarssl))
+$(eval $(call BuildPackage,shadowsocksr-libev-server-mbedtls))
