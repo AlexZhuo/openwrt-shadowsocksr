@@ -121,10 +121,36 @@ WARNING: No feed for package 'libmbedtls' found, maybe it's already part of the 
 Installing package 'pcre' from packages
 ```
 
-报错原因：一般出现在LEDE rc1,rc2的SDK上，更换SDK可解决这个问题。
+报错原因：一般出现在LEDE rc1,rc2的SDK上，把17.0.2 LEDE SDK中的feeds.conf.default文件内容复制到SDK中去就可以了。
 
-解决方法：更换SDK，或者
+解决方法：更换SDK，或者修改SDK根目录下的feeds.conf.default文件
+```
+src-git base https://git.lede-project.org/source.git;v17.01.2
+src-git packages https://git.lede-project.org/feed/packages.git^dc558eaa296686603c1730c1aab01f3ea69d7831
+src-git luci https://git.lede-project.org/project/luci.git^7f6fc1681f7becc514a58082e871f3855d3a123f
+src-git routing https://git.lede-project.org/feed/routing.git^dbbad8472288498c17825303d834da3ee5030806
+src-git telephony https://git.lede-project.org/feed/telephony.git^1f0fb2538ba6fc306198fe2a9a4b976d63adb304
+```
+或
+
 git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
+
+
+6、报错
+```
+checking for cipher_init_ctx in -lpolarssl... no
+configure: error: PolarSSL libraries not found.
+```
+报错原因：官方源缺少PolarSSl依赖
+解决方法：复制https://github.com/AlexZhuo/openwrt-feeds/tree/master/base/中polarssl文件夹到SDK根目录/package/feeds/base
+
+7、报错
+```
+checking whether mbedtls supports the Camellia block cipher or not... configure: error: MBEDTLS_CAMELLIA_C required
+```
+报错原因：官方源mbedtls版本太高,应该使用2.4.0
+解决方法：复制https://github.com/AlexZhuo/openwrt-feeds/tree/master/base中mbedtls文件夹替换SDK根目录/package/feeds/base/mbedtls
+
 
 
 配置
