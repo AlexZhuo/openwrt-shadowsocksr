@@ -1,8 +1,9 @@
 Shadowsocksr-libev for OpenWrt/LEDE
 ===
-版本 2.5.6
+版本 2.5.6  2016-稳定版
 
-为编译[此固件][O]所需依赖包而写的Makefile,在CC 15.05,CC 15.05.1,LEDE 17.01.0编译成功
+
+为编译[此固件][O]所需依赖包而写的Makefile,在CC 15.05,CC 15.05.1,LEDE 17.01.1 17.01.2编译成功
 
 简介
 ---
@@ -10,6 +11,7 @@ Shadowsocksr-libev for OpenWrt/LEDE
 本项目是 [shadowsocksr-libev][1] 在 OpenWrt 上的移植 ,写法参考https://github.com/shadowsocks/openwrt-shadowsocks/ 
  
 可与[luci-app-shadowsocksR][P]搭配使用
+
  
 特性
 ---
@@ -51,9 +53,9 @@ Shadowsocksr-libev for OpenWrt/LEDE
    tar xjf OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
    cd OpenWrt-SDK-ar71xx-*
    # 安装 feeds
-   # 如果是 uClibc SDK (15.05.1 及以下)
+   # 方案一(推荐):使用自定义feeds
      git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
-   # 如果是 musl SDK (trunk 或 LEDE)
+   # 方案二:使用官方feeds
      ./scripts/feeds update base packages
      ./scripts/feeds install zlib libopenssl libpolarssl libmbedtls libpcre
      rm -rf package/feeds/base/mbedtls/patches
@@ -142,14 +144,16 @@ checking for cipher_init_ctx in -lpolarssl... no
 configure: error: PolarSSL libraries not found.
 ```
 报错原因：官方源缺少PolarSSl依赖
-解决方法：复制https://github.com/AlexZhuo/openwrt-feeds/tree/master/base/中polarssl文件夹到SDK根目录/package/feeds/base
+
+解决方法：复制https://github.com/AlexZhuo/openwrt-feeds/tree/master/base/ 中polarssl文件夹到SDK根目录/package/feeds/base
 
 7、报错
 ```
 checking whether mbedtls supports the Camellia block cipher or not... configure: error: MBEDTLS_CAMELLIA_C required
 ```
 报错原因：官方源mbedtls版本太高,应该使用2.4.0
-解决方法：复制https://github.com/AlexZhuo/openwrt-feeds/tree/master/base中mbedtls文件夹替换SDK根目录/package/feeds/base/mbedtls
+
+解决方法：复制https://github.com/AlexZhuo/openwrt-feeds/tree/master/base 中mbedtls文件夹替换SDK根目录/package/feeds/base/mbedtls
 
 
 
