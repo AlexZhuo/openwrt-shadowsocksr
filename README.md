@@ -4,11 +4,11 @@ Shadowsocksr-libev for OpenWrt/LEDE
 
 相比2016-stable分支,有如下不同
 
-支持auth-chain-b
+1、支持auth_chain_a;
 
-ssr-tunnel合并进ssr-local
+2、ssr-tunnel合并进ssr-local
 
-去掉ssr-server
+3、去掉ssr-server
 
 
 为编译[此固件][O]所需依赖包而写的Makefile,在CC 15.05,CC 15.05.1,LEDE 17.01.1 17.01.2编译成功
@@ -33,19 +33,11 @@ ssr-tunnel合并进ssr-local
    客户端/
    └── usr/
        └── bin/
-           ├── ssr-local       // 提供 SOCKS 代理
-           ├── ssr-redir       // 提供透明代理, 从 v2.2.0 开始支持 UDP
-           └── ssr-tunnel      // 提供端口转发, 可用于 DNS 查询
+           ├── ssr-local       // 提供 SOCKS 代理,和旧版ssr-tunnel的端口转发功能
+           └── ssr-redir       // 提供透明代理, 从 v2.2.0 开始支持 UDP
    ```
 
- - shadowsocksr-libev-server
 
-   ```
-   服务端/
-   └── usr/
-       └── bin/
-           └── ssr-server      // 服务端可执行文件
-   ```
 
 获取最新代码
 ---
