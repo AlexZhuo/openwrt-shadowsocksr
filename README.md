@@ -33,8 +33,8 @@ Shadowsocksr-libev for OpenWrt/LEDE
    客户端/
    └── usr/
        └── bin/
-           ├── ssr-local       // 提供 SOCKS 代理,和旧版ssr-tunnel的端口转发功能
-           └── ssr-redir       // 提供透明代理, 从 v2.2.0 开始支持 UDP
+           ├── ssr-local       // 提供 SOCKS 代理和旧版ssr-tunnel的端口转发功能 
+           └── ssr-redir      // 提供透明代理, 从 v2.2.0 开始支持 UDP
    ```
 
 
