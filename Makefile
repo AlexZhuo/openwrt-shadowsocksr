@@ -79,8 +79,8 @@ define Package/shadowsocksr-libev/install
 	#$(INSTALL_BIN) ./files/shadowsocksr $(1)/etc/init.d/shadowsocksr
 	$(INSTALL_CONF) ./files/shadowsocksr.json $(1)/etc/shadowsocksr.json
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-local $(1)/usr/bin/ssr-local
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-redir $(1)/usr/bin/ssr-redir
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-local $(1)/usr/bin/ssrr-local
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-redir $(1)/usr/bin/ssrr-redir
 endef
 
 Package/shadowsocksr-libev-polarssl/install=$(Package/shadowsocksr-libev/install)
